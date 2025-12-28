@@ -3,207 +3,165 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⏱️ MIQAT - Management Intelligent Quality Action Timer</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<title>MIQAT</title>
 
 <style>
 :root{
-  --bg:#020617;
-  --border:#1f2937;
+  --bg:#0b1220;
+  --card:#0f1b2d;
   --accent:#22d3ee;
-  --success:#22c55e;
-  --danger:#ef4444;
   --text:#e5e7eb;
-  --muted:#9ca3af;
 }
 
-*{box-sizing:border-box}
+*{box-sizing:border-box;font-family:system-ui,Segoe UI,Roboto}
 
 body{
   margin:0;
-  min-height:100vh;
+  background:radial-gradient(circle at top,#16233a,#020617);
+  color:var(--text);
   display:flex;
   justify-content:center;
-  align-items:center;
-  background:radial-gradient(circle at top,#1e293b,#020617);
-  font-family:'Inter',sans-serif;
-  color:var(--text);
+  padding:16px;
 }
 
-.container{
+.app{
   width:100%;
   max-width:520px;
-  padding:20px;
-  background:#020617;
+  background:linear-gradient(180deg,#0b1220,#020617);
+  border-radius:22px;
+  padding:18px;
+  box-shadow:0 20px 50px rgba(0,0,0,.6);
+}
+
+.timer-card{
+  background:linear-gradient(180deg,#0f172a,#020617);
   border-radius:20px;
-  box-shadow:0 0 36px rgba(34,211,238,.18);
+  padding:18px;
 }
 
-h1{
-  font-family:'Playfair Display',serif;
+.title{
   text-align:center;
-  margin:0 0 8px;
-  font-size:22px;
+  letter-spacing:.08em;
+  opacity:.9;
 }
 
-.timer{
+.time{
+  font-size:48px;
   text-align:center;
-  font-size:46px;
-  letter-spacing:2px;
-  margin-bottom:6px;
-}
-
-.progress-wrapper{
-  width:100%;
-  height:9px;
-  background:#020617;
-  border:1px solid var(--border);
-  border-radius:999px;
-  overflow:hidden;
   margin:10px 0;
 }
 
-.progress-bar{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,#38bdf8,#0ea5e9);
-  transition:width .35s ease;
-}
-
-.inputs{
+/* ====== INPUT JAM & MENIT (RAPI MOBILE) ====== */
+.time-input-group{
   display:flex;
+  align-items:flex-end;
+  justify-content:center;
   gap:8px;
+  margin:14px 0;
 }
 
-.inputs input{
-  flex:1;
-  padding:10px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  background:#020617;
-  color:var(--text);
-  font-size:14px;
-  text-align:center;
+.time-field{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
+
+.time-field label{
+  font-size:11px;
+  color:rgba(255,255,255,.6);
+  margin-bottom:4px;
+}
+
+.time-field input{
+  width:72px;
+  padding:8px 6px;
+  font-size:15px;
+  text-align:center;
+  border-radius:10px;
+  border:none;
+  outline:none;
+  background:#0f1b2d;
+  color:#fff;
+}
+
+.time-separator{
+  font-size:20px;
+  color:rgba(255,255,255,.5);
+  padding-bottom:6px;
+}
+/* =========================================== */
 
 .buttons{
   display:flex;
-  gap:8px;
+  gap:10px;
   margin-top:10px;
 }
 
 button{
   flex:1;
   padding:12px;
-  border-radius:14px;
   border:none;
-  font-weight:600;
-  cursor:pointer;
-  font-size:14px;
-}
-
-.start{background:linear-gradient(135deg,#22d3ee,#38bdf8);color:#020617;}
-.pause{background:#1f2937;color:#fff;}
-.reset{background:#7c2d12;color:#fff;}
-
-.stop-alarm{
-  display:none;
-  margin-top:12px;
-  width:100%;
-  background:var(--danger);
+  border-radius:14px;
+  font-size:15px;
   color:#fff;
 }
 
-.todo{
-  margin-top:18px;
+.start{background:#22d3ee;color:#022c22}
+.pause{background:#1f2937}
+.reset{background:#7c2d12}
+
+.tasks{
+  margin-top:16px;
 }
 
-.todo h2{
-  font-size:13px;
-  color:var(--muted);
-  margin-bottom:6px;
-}
-
-.task-progress-wrapper{
-  width:100%;
-  height:7px;
+.progress{
+  height:6px;
   background:#020617;
-  border:1px solid var(--border);
   border-radius:999px;
   overflow:hidden;
 }
 
-.task-progress-bar{
+.progress div{
   height:100%;
   width:0%;
-  background:linear-gradient(90deg,#38bdf8,#0ea5e9);
-  transition:width .3s ease;
+  background:#22d3ee;
 }
 
-.task-progress-text{
-  font-size:11px;
-  color:var(--muted);
-  text-align:right;
-  margin-top:2px;
-}
-
-.todo-input{
+.task-input{
   display:flex;
-  gap:8px;
-  margin-top:8px;
-}
-
-.todo-input input{
-  flex:1;
-  padding:10px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  background:#020617;
-  color:var(--text);
-  font-size:14px;
-}
-
-.todo-input button{
-  background:var(--accent);
-  color:#020617;
-}
-
-ul{
-  list-style:none;
-  padding:0;
+  gap:10px;
   margin-top:10px;
 }
 
-li{
+.task-input input{
+  flex:1;
+  padding:12px;
+  border-radius:14px;
+  border:none;
+  outline:none;
+  background:#020617;
+  color:#fff;
+}
+
+.task-input button{
+  width:56px;
+  background:#22d3ee;
+  color:#022c22;
+}
+
+.task{
   display:flex;
   align-items:center;
-  gap:8px;
-  padding:10px 12px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  margin-bottom:8px;
+  justify-content:space-between;
+  padding:12px;
+  border-radius:14px;
+  margin-top:10px;
+  background:#020617;
 }
 
-.task-check{
-  width:18px;
-  height:18px;
-  accent-color:var(--accent);
-}
-
-.task-name{flex:1;}
-
-.task-time{
-  min-width:64px;
-  font-size:12px;
-  color:var(--muted);
-  text-align:right;
-}
-
-li.done .task-name{
+.task span.done{
   text-decoration:line-through;
-  color:var(--success);
-  opacity:.75;
+  color:#22c55e;
 }
 
 .copyright{
@@ -219,191 +177,124 @@ li.done .task-name{
 </head>
 
 <body>
+<div class="app">
+  <div class="timer-card">
+    <div class="title">⏱ MIQAT</div>
+    <div class="time" id="display">00:00:00</div>
 
-<div class="container">
-<h1>⏱️ MIQAT</h1>
-<div class="timer" id="timer">00:00:00</div>
+    <!-- INPUT JAM & MENIT (FINAL) -->
+    <div class="time-input-group">
+      <div class="time-field">
+        <label>Jam</label>
+        <input type="number" id="hours" min="0" placeholder="0">
+      </div>
 
-<div class="progress-wrapper">
-  <div class="progress-bar" id="progressBar"></div>
+      <span class="time-separator">:</span>
+
+      <div class="time-field">
+        <label>Menit</label>
+        <input type="number" id="minutes" min="0" max="59" placeholder="00">
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="start" onclick="start()">Mulai</button>
+      <button class="pause" onclick="togglePause()">Jeda</button>
+      <button class="reset" onclick="resetTimer()">Reset</button>
+    </div>
+  </div>
+
+  <div class="tasks">
+    <div class="progress"><div id="progressBar"></div></div>
+
+    <div class="task-input">
+      <input id="taskInput" placeholder="Tambah tugas...">
+      <button onclick="addTask()">+</button>
+    </div>
+
+    <div id="taskList"></div>
+  </div>
 </div>
 
-<div class="inputs">
-  <input type="number" id="hour" placeholder="Jam">
-  <input type="number" id="minute" placeholder="Menit">
+<div class="copyright">
+© 2025 Afhimna Dev. All Rights Reserved.
 </div>
-
-<div class="buttons">
-  <button class="start" onclick="startTimer()">Mulai</button>
-  <button class="pause" onclick="togglePause()">Jeda</button>
-  <button class="reset" onclick="resetTimer()">Reset</button>
-</div>
-
-<button class="stop-alarm" id="stopAlarmBtn" onclick="stopAlarm()">🔇 STOP ALARM</button>
-
-<div class="todo">
-<h2>📝 Daftar Tugas</h2>
-
-<div class="task-progress-wrapper">
-  <div class="task-progress-bar" id="taskProgressBar"></div>
-</div>
-<div class="task-progress-text" id="taskProgressText">0% tugas selesai</div>
-
-<div class="todo-input">
-  <input id="taskInput" placeholder="Tambah tugas...">
-  <button onclick="addTask()">＋</button>
-</div>
-
-<ul id="taskList"></ul>
-</div>
-</div>
-
-<p class="copyright">© 2025 Afhimna Dev. All Rights Reserved.</p>
-
-<audio id="alarmSound" loop>
-<source src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3">
-</audio>
 
 <script>
-let totalSeconds=0, initialSeconds=0, interval=null;
-let lastTaskCheckpoint=null;
-
-const timer=document.getElementById("timer");
-const progressBar=document.getElementById("progressBar");
-const alarm=document.getElementById("alarmSound");
-const stopBtn=document.getElementById("stopAlarmBtn");
-const taskProgressBar=document.getElementById("taskProgressBar");
-const taskProgressText=document.getElementById("taskProgressText");
-
-function formatElapsed(sec){
-  const m=Math.floor(sec/60);
-  const s=sec%60;
-  return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
-}
+let totalSeconds=0,interval=null,paused=false;
+let tasks=[];
 
 function updateDisplay(){
-  const h=Math.floor(totalSeconds/3600);
-  const m=Math.floor((totalSeconds%3600)/60);
-  const s=totalSeconds%60;
-  timer.textContent=
-    String(h).padStart(2,"0")+":"+
-    String(m).padStart(2,"0")+":"+
-    String(s).padStart(2,"0");
+  let h=Math.floor(totalSeconds/3600);
+  let m=Math.floor((totalSeconds%3600)/60);
+  let s=totalSeconds%60;
+  display.textContent=
+    String(h).padStart(2,'0')+":"+
+    String(m).padStart(2,'0')+":"+
+    String(s).padStart(2,'0');
 }
 
-function startTimer(){
+function start(){
   if(interval) return;
   if(totalSeconds===0){
-    totalSeconds=(hour.value||0)*3600+(minute.value||0)*60;
-    initialSeconds=totalSeconds;
-    lastTaskCheckpoint=null;
+    let h=+hours.value||0;
+    let m=+minutes.value||0;
+    totalSeconds=(h*3600)+(m*60);
   }
-  if(totalSeconds<=0) return;
-
   interval=setInterval(()=>{
-    totalSeconds--;
-    updateDisplay();
-    progressBar.style.width=((initialSeconds-totalSeconds)/initialSeconds*100)+"%";
-    if(totalSeconds<=0){
-      clearInterval(interval);
-      interval=null;
-      alarm.play();
-      stopBtn.style.display="block";
+    if(!paused && totalSeconds>0){
+      totalSeconds--;
+      updateDisplay();
     }
   },1000);
 }
 
-function togglePause(){
-  if(interval){
-    clearInterval(interval);
-    interval=null;
-  }else{
-    startTimer();
-  }
-}
+function togglePause(){ paused=!paused; }
 
 function resetTimer(){
   clearInterval(interval);
   interval=null;
-  stopAlarm();
-  totalSeconds=initialSeconds=0;
-  lastTaskCheckpoint=null;
-  progressBar.style.width="0%";
+  totalSeconds=0;
+  paused=false;
   updateDisplay();
 }
 
-function stopAlarm(){
-  alarm.pause();
-  alarm.currentTime=0;
-  stopBtn.style.display="none";
-}
-
-function updateTaskProgress(){
-  const tasks=[...document.querySelectorAll("#taskList li")];
-  const done=tasks.filter(li=>li.classList.contains("done"));
-  const percent=tasks.length?Math.round(done.length/tasks.length*100):0;
-  taskProgressBar.style.width=percent+"%";
-  taskProgressText.textContent=percent+"% tugas selesai";
-}
+document.addEventListener("keydown",e=>{
+  if(e.key===" ") {e.preventDefault();togglePause();}
+  if(e.key==="Enter"){
+    if(document.activeElement===taskInput) addTask();
+    else start();
+  }
+});
 
 function addTask(){
-  const text=taskInput.value.trim();
-  if(!text) return;
-
-  const li=document.createElement("li");
-  const cb=document.createElement("input");
-  cb.type="checkbox";
-  cb.className="task-check";
-
-  const name=document.createElement("span");
-  name.className="task-name";
-  name.textContent=text;
-
-  const time=document.createElement("span");
-  time.className="task-time";
-  time.textContent="--:--";
-
-  cb.onchange=()=>{
-    li.classList.toggle("done");
-    if(cb.checked){
-      const elapsed=initialSeconds-totalSeconds;
-      const duration=lastTaskCheckpoint===null
-        ? elapsed
-        : elapsed-lastTaskCheckpoint;
-      li.dataset.time=duration;
-      time.textContent=formatElapsed(duration);
-      lastTaskCheckpoint=elapsed;
-    }else{
-      delete li.dataset.time;
-      time.textContent="--:--";
-    }
-    updateTaskProgress();
-  };
-
-  li.append(cb,name,time);
-  taskList.appendChild(li);
+  let v=taskInput.value.trim();
+  if(!v) return;
+  tasks.push({text:v,done:false});
   taskInput.value="";
+  renderTasks();
 }
 
-hour.addEventListener("keydown",e=>{if(e.key==="Enter") startTimer();});
-minute.addEventListener("keydown",e=>{if(e.key==="Enter") startTimer();});
-taskInput.addEventListener("keydown",e=>{
-  if(e.key==="Enter"){
-    e.preventDefault();
-    addTask();
-  }
-});
+function renderTasks(){
+  taskList.innerHTML="";
+  tasks.forEach((t,i)=>{
+    let d=document.createElement("div");
+    d.className="task";
+    let s=document.createElement("span");
+    s.textContent=t.text;
+    if(t.done) s.classList.add("done");
+    let c=document.createElement("input");
+    c.type="checkbox";
+    c.checked=t.done;
+    c.onchange=()=>{t.done=c.checked;renderTasks();}
+    d.append(c,s);
+    taskList.appendChild(d);
+  });
+  let done=tasks.filter(t=>t.done).length;
+  progressBar.style.width=(tasks.length?done/tasks.length*100:0)+"%";
+}
 
-document.addEventListener("keydown",e=>{
-  if(e.code==="Space"){
-    const tag=document.activeElement.tagName;
-    if(tag!=="INPUT" && tag!=="TEXTAREA"){
-      e.preventDefault();
-      togglePause();
-    }
-  }
-});
+updateDisplay();
 </script>
-
 </body>
 </html>
