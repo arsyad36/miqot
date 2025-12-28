@@ -34,71 +34,73 @@ body{
 .container{
   width:100%;
   max-width:520px;
-  padding:24px;
+  padding:20px;
   background:#020617;
-  border-radius:22px;
-  box-shadow:0 0 40px rgba(34,211,238,.18);
+  border-radius:20px;
+  box-shadow:0 0 36px rgba(34,211,238,.18);
 }
 
 h1{
   font-family:'Playfair Display',serif;
   text-align:center;
-  margin:0 0 10px;
+  margin:0 0 8px;
+  font-size:22px;
 }
 
 .timer{
   text-align:center;
-  font-size:52px;
-  letter-spacing:3px;
+  font-size:46px;
+  letter-spacing:2px;
+  margin-bottom:6px;
 }
 
 .progress-wrapper{
   width:100%;
-  height:10px;
+  height:9px;
   background:#020617;
   border:1px solid var(--border);
   border-radius:999px;
   overflow:hidden;
-  margin:12px 0;
+  margin:10px 0;
 }
 
 .progress-bar{
   height:100%;
   width:0%;
   background:linear-gradient(90deg,#38bdf8,#0ea5e9);
-  border-radius:999px;
-  transition:width .4s ease;
+  transition:width .35s ease;
 }
 
 .inputs{
   display:flex;
-  gap:10px;
+  gap:8px;
 }
 
-input{
+.inputs input{
   flex:1;
-  padding:14px;
-  border-radius:14px;
+  padding:10px;
+  border-radius:12px;
   border:1px solid var(--border);
   background:#020617;
   color:var(--text);
-  font-size:16px;
+  font-size:14px;
   text-align:center;
 }
 
 .buttons{
   display:flex;
-  gap:10px;
-  margin-top:12px;
+  gap:8px;
+  margin-top:10px;
 }
 
 button{
   flex:1;
-  padding:14px;
-  border-radius:16px;
+  padding:12px;
+  border-radius:14px;
   border:none;
   font-weight:600;
   cursor:pointer;
+  font-size:14px;
 }
 
 .start{background:linear-gradient(135deg,#22d3ee,#38bdf8);color:#020617;}
@@ -107,26 +109,25 @@ button{
 
 .stop-alarm{
   display:none;
-  margin-top:14px;
+  margin-top:12px;
   width:100%;
   background:var(--danger);
   color:#fff;
 }
 
 .todo{
-  margin-top:22px;
+  margin-top:18px;
 }
 
 .todo h2{
-  font-size:14px;
+  font-size:13px;
   color:var(--muted);
   margin-bottom:6px;
 }
 
-/* ===== TASK PROGRESS ===== */
 .task-progress-wrapper{
   width:100%;
-  height:8px;
+  height:7px;
   background:#020617;
   border:1px solid var(--border);
   border-radius:999px;
@@ -136,13 +137,12 @@ button{
 .task-progress-bar{
   height:100%;
   width:0%;
-  border-radius:999px;
   background:linear-gradient(90deg,#38bdf8,#0ea5e9);
-  transition:width .35s ease, background .45s ease;
+  transition:width .3s ease;
 }
 
 .task-progress-text{
-  font-size:12px;
+  font-size:11px;
   color:var(--muted);
   text-align:right;
   margin-top:2px;
@@ -151,7 +151,17 @@ button{
 .todo-input{
   display:flex;
   gap:8px;
-  margin-top:10px;
+  margin-top:8px;
+}
+
+.todo-input input{
+  flex:1;
+  padding:10px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#020617;
+  color:var(--text);
+  font-size:14px;
 }
 
 .todo-input button{
@@ -162,33 +172,30 @@ button{
 ul{
   list-style:none;
   padding:0;
-  margin-top:12px;
+  margin-top:10px;
 }
 
 li{
   display:flex;
   align-items:center;
-  gap:10px;
-  padding:12px 14px;
-  border-radius:14px;
+  gap:8px;
+  padding:10px 12px;
+  border-radius:12px;
   border:1px solid var(--border);
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
 
 .task-check{
-  width:20px;
-  height:20px;
+  width:18px;
+  height:18px;
   accent-color:var(--accent);
 }
 
-.task-name{
-  flex:1;
-  text-align:left;
-}
+.task-name{flex:1;}
 
 .task-time{
-  min-width:72px;
-  font-size:13px;
+  min-width:64px;
+  font-size:12px;
   color:var(--muted);
   text-align:right;
 }
@@ -199,22 +206,14 @@ li.done .task-name{
   opacity:.75;
 }
 
-.stats{
-  font-size:13px;
-  color:var(--muted);
-  margin-top:8px;
-}
-
-/* ===== WATERMARK ===== */
 .copyright{
   position:fixed;
-  bottom:6px;
+  bottom:4px;
   left:50%;
   transform:translateX(-50%);
-  font-size:10px;
+  font-size:9px;
   color:rgba(255,255,255,.35);
   pointer-events:none;
-  user-select:none;
 }
 </style>
 </head>
@@ -222,81 +221,59 @@ li.done .task-name{
 <body>
 
 <div class="container">
-  <h1>⏱️ MIQAT - Management Intelligent Quality Action Timer</h1>
+<h1>⏱️ MIQAT</h1>
+<div class="timer" id="timer">00:00:00</div>
 
-  <div class="timer" id="timer">00:00:00</div>
+<div class="progress-wrapper">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
 
-  <div class="progress-wrapper">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
+<div class="inputs">
+  <input type="number" id="hour" placeholder="Jam">
+  <input type="number" id="minute" placeholder="Menit">
+</div>
 
-  <div class="inputs">
-    <input type="number" id="hour" placeholder="Jam">
-    <input type="number" id="minute" placeholder="Menit">
-  </div>
+<div class="buttons">
+  <button class="start" onclick="startTimer()">Mulai</button>
+  <button class="pause" onclick="togglePause()">Jeda</button>
+  <button class="reset" onclick="resetTimer()">Reset</button>
+</div>
 
-  <div class="buttons">
-    <button class="start" onclick="startTimer()">Mulai</button>
-    <button class="pause" onclick="togglePause()">Jeda</button>
-    <button class="reset" onclick="resetTimer()">Reset</button>
-  </div>
+<button class="stop-alarm" id="stopAlarmBtn" onclick="stopAlarm()">🔇 STOP ALARM</button>
 
-  <button class="stop-alarm" id="stopAlarmBtn" onclick="stopAlarm()">🔇 STOP ALARM</button>
+<div class="todo">
+<h2>📝 Daftar Tugas</h2>
 
-  <div class="todo">
-    <h2>📝 Daftar Tugas</h2>
+<div class="task-progress-wrapper">
+  <div class="task-progress-bar" id="taskProgressBar"></div>
+</div>
+<div class="task-progress-text" id="taskProgressText">0% tugas selesai</div>
 
-    <div class="task-progress-wrapper">
-      <div class="task-progress-bar" id="taskProgressBar"></div>
-    </div>
-    <div class="task-progress-text" id="taskProgressText">0% tugas selesai</div>
+<div class="todo-input">
+  <input id="taskInput" placeholder="Tambah tugas...">
+  <button onclick="addTask()">＋</button>
+</div>
 
-    <div class="todo-input">
-      <input id="taskInput" placeholder="Tambah tugas...">
-      <button onclick="addTask()">＋</button>
-    </div>
-
-    <ul id="taskList"></ul>
-
-    <div class="stats">
-      🏎️ Tercepat: <span id="fastest">-</span><br>
-      🐢 Terlama: <span id="slowest">-</span>
-    </div>
-  </div>
+<ul id="taskList"></ul>
+</div>
 </div>
 
 <p class="copyright">© 2025 Afhimna Dev. All Rights Reserved.</p>
 
 <audio id="alarmSound" loop>
-  <source src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3">
+<source src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3">
 </audio>
 
 <script>
-
-const taskColors=[
-  "linear-gradient(90deg,#38bdf8,#0ea5e9)",
-  "linear-gradient(90deg,#22d3ee,#06b6d4)",
-  "linear-gradient(90deg,#2dd4bf,#14b8a6)",
-  "linear-gradient(90deg,#34d399,#10b981)",
-  "linear-gradient(90deg,#22c55e,#16a34a)",
-  "linear-gradient(90deg,#a3e635,#65a30d)",
-  "linear-gradient(90deg,#fde047,#eab308)",
-  "linear-gradient(90deg,#fbbf24,#f59e0b)",
-  "linear-gradient(90deg,#fb923c,#f97316)",
-  "linear-gradient(90deg,#fb7185,#e11d48)"
-];
-
 let totalSeconds=0, initialSeconds=0, interval=null;
+let lastTaskCheckpoint=null;
 
 const timer=document.getElementById("timer");
 const progressBar=document.getElementById("progressBar");
 const alarm=document.getElementById("alarmSound");
 const stopBtn=document.getElementById("stopAlarmBtn");
-
 const taskProgressBar=document.getElementById("taskProgressBar");
 const taskProgressText=document.getElementById("taskProgressText");
-const fastestEl=document.getElementById("fastest");
-const slowestEl=document.getElementById("slowest");
 
 function formatElapsed(sec){
   const m=Math.floor(sec/60);
@@ -316,10 +293,10 @@ function updateDisplay(){
 
 function startTimer(){
   if(interval) return;
-
   if(totalSeconds===0){
     totalSeconds=(hour.value||0)*3600+(minute.value||0)*60;
     initialSeconds=totalSeconds;
+    lastTaskCheckpoint=null;
   }
   if(totalSeconds<=0) return;
 
@@ -327,7 +304,6 @@ function startTimer(){
     totalSeconds--;
     updateDisplay();
     progressBar.style.width=((initialSeconds-totalSeconds)/initialSeconds*100)+"%";
-
     if(totalSeconds<=0){
       clearInterval(interval);
       interval=null;
@@ -351,6 +327,7 @@ function resetTimer(){
   interval=null;
   stopAlarm();
   totalSeconds=initialSeconds=0;
+  lastTaskCheckpoint=null;
   progressBar.style.width="0%";
   updateDisplay();
 }
@@ -364,17 +341,9 @@ function stopAlarm(){
 function updateTaskProgress(){
   const tasks=[...document.querySelectorAll("#taskList li")];
   const done=tasks.filter(li=>li.classList.contains("done"));
-
   const percent=tasks.length?Math.round(done.length/tasks.length*100):0;
   taskProgressBar.style.width=percent+"%";
   taskProgressText.textContent=percent+"% tugas selesai";
-
-  const colorIndex=Math.min(done.length,taskColors.length-1);
-  taskProgressBar.style.background=taskColors[colorIndex];
-
-  const times=done.map(li=>Number(li.dataset.time)).filter(Boolean);
-  fastestEl.textContent=times.length?formatElapsed(Math.min(...times)):"-";
-  slowestEl.textContent=times.length?formatElapsed(Math.max(...times)):"-";
 }
 
 function addTask(){
@@ -382,7 +351,6 @@ function addTask(){
   if(!text) return;
 
   const li=document.createElement("li");
-
   const cb=document.createElement("input");
   cb.type="checkbox";
   cb.className="task-check";
@@ -397,10 +365,14 @@ function addTask(){
 
   cb.onchange=()=>{
     li.classList.toggle("done");
-    if(cb.checked && initialSeconds>0){
+    if(cb.checked){
       const elapsed=initialSeconds-totalSeconds;
-      li.dataset.time=elapsed;
-      time.textContent=formatElapsed(elapsed);
+      const duration=lastTaskCheckpoint===null
+        ? elapsed
+        : elapsed-lastTaskCheckpoint;
+      li.dataset.time=duration;
+      time.textContent=formatElapsed(duration);
+      lastTaskCheckpoint=elapsed;
     }else{
       delete li.dataset.time;
       time.textContent="--:--";
@@ -411,26 +383,24 @@ function addTask(){
   li.append(cb,name,time);
   taskList.appendChild(li);
   taskInput.value="";
-  updateTaskProgress();
 }
 
-document.addEventListener("keydown",e=>{
-  if(e.key==="Enter"){
-    startTimer(); 
-  }
-
-  if(e.code==="Space"){
-    if(document.activeElement.tagName!=="INPUT"){
-      e.preventDefault();
-      togglePause();
-    }
-  }
-});
-
+hour.addEventListener("keydown",e=>{if(e.key==="Enter") startTimer();});
+minute.addEventListener("keydown",e=>{if(e.key==="Enter") startTimer();});
 taskInput.addEventListener("keydown",e=>{
   if(e.key==="Enter"){
     e.preventDefault();
     addTask();
+  }
+});
+
+document.addEventListener("keydown",e=>{
+  if(e.code==="Space"){
+    const tag=document.activeElement.tagName;
+    if(tag!=="INPUT" && tag!=="TEXTAREA"){
+      e.preventDefault();
+      togglePause();
+    }
   }
 });
 </script>
