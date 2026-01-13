@@ -3,17 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MIQAT</title>
+<title>⏱️ MIQAT</title>
 
 <style>
 :root{
   --bg:#020617;
-  --card:#0f172a;
+  --border:#1f2937;
   --accent:#22d3ee;
   --text:#e5e7eb;
   --muted:#9ca3af;
+  --success:#22c55e;
 }
-*{box-sizing:border-box}
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+*::selection{background:transparent}
+
 body{
   margin:0;
   min-height:100vh;
@@ -21,9 +29,10 @@ body{
   justify-content:center;
   align-items:center;
   background:radial-gradient(circle at top,#1e293b,#020617);
-  font-family:system-ui;
+  font-family:system-ui,sans-serif;
   color:var(--text);
 }
+
 .container{
   width:100%;
   max-width:520px;
@@ -32,10 +41,34 @@ body{
   border-radius:22px;
   box-shadow:0 0 40px rgba(34,211,238,.18);
 }
-h1{text-align:center;margin-bottom:10px}
-.timer{font-size:48px;text-align:center;margin:10px 0}
 
-/* INPUT JAM & MENIT (RAPI HP) */
+/* ===== TIMER ===== */
+h1{text-align:center;margin:0 0 10px}
+
+.timer{
+  text-align:center;
+  font-size:48px;
+  letter-spacing:2px;
+}
+
+/* ===== PROGRESS WAKTU ===== */
+.progress-wrapper{
+  width:100%;
+  height:8px;
+  background:#020617;
+  border:1px solid var(--border);
+  border-radius:999px;
+  overflow:hidden;
+  margin:10px 0;
+}
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#38bdf8,#0ea5e9);
+  transition:width .4s ease;
+}
+
+/* ===== INPUT ===== */
 .time-input-group{
   display:flex;
   justify-content:center;
@@ -57,8 +90,9 @@ h1{text-align:center;margin-bottom:10px}
   width:72px;
   padding:8px;
   text-align:center;
+  font-size:15px;
   border-radius:10px;
-  border:1px solid #1f2937;
+  border:1px solid var(--border);
   background:#020617;
   color:var(--text);
 }
@@ -68,24 +102,11 @@ h1{text-align:center;margin-bottom:10px}
   padding-bottom:6px;
 }
 
-.progress-wrapper{
-  height:8px;
-  border-radius:999px;
-  background:#020617;
-  border:1px solid #1f2937;
-  overflow:hidden;
-}
-.progress-bar{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,#38bdf8,#0ea5e9);
-  transition:width .4s ease;
-}
-
+/* ===== BUTTON ===== */
 .buttons{
   display:flex;
   gap:10px;
-  margin-top:12px;
+  margin-top:10px;
 }
 button{
   flex:1;
@@ -94,17 +115,34 @@ button{
   border-radius:14px;
   font-weight:600;
 }
-.start{background:#22d3ee;color:#020617}
+.start{background:var(--accent);color:#020617}
 .pause{background:#1f2937;color:#fff}
 .reset{background:#7c2d12;color:#fff}
 
+/* ===== TODO ===== */
 .todo{margin-top:18px}
+
+.task-progress-wrapper{
+  width:100%;
+  height:6px;
+  background:#020617;
+  border:1px solid var(--border);
+  border-radius:999px;
+  overflow:hidden;
+}
+.task-progress-bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#38bdf8,#0ea5e9);
+  transition:width .35s ease;
+}
 .task-progress-text{
   font-size:12px;
   color:var(--muted);
   text-align:right;
   margin-top:4px;
 }
+
 .todo-input{
   display:flex;
   gap:8px;
@@ -114,71 +152,126 @@ button{
   flex:1;
   padding:10px;
   border-radius:12px;
-  border:1px solid #1f2937;
+  border:1px solid var(--border);
   background:#020617;
   color:var(--text);
 }
 .todo-input button{
+  width:48px;
   background:var(--accent);
   color:#020617;
-  border:none;
   border-radius:12px;
-  width:48px;
 }
 
 ul{list-style:none;padding:0;margin-top:12px}
+
 li{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:10px;
   padding:12px;
   border-radius:14px;
-  border:1px solid #1f2937;
+  border:1px solid var(--border);
   margin-bottom:8px;
 }
-.task-left{
-  display:flex;
-  align-items:center;
-  gap:10px;
+
+.task-left{display:flex;align-items:center;gap:10px}
+
+.task-name.done{
+  text-decoration:line-through;
+  color:var(--success);
 }
 .task-time{
   font-size:12px;
   color:var(--muted);
 }
-.done .task-name{
-  text-decoration:line-through;
-  color:#22c55e;
+
+/* ===== SOWAR / SOCIAL ===== */
+.social-container{
+  margin-top:26px;
+  text-align:center;
+}
+
+.social-container p{
+  font-size:13px;
+  color:#bbb;
+  margin-bottom:14px;
+}
+
+.social-icons{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:24px;
+}
+
+.social-icons a{
+  display:block;
+  outline:none;
+  text-decoration:none;
+}
+
+.social-icon{
+  width:52px;
+  height:52px;
+  padding:6px;
+  border-radius:14px;
+  background:rgba(255,255,255,.03);
+  opacity:.85;
+  transition:.35s ease;
+}
+
+.social-icon:hover{
+  transform:scale(1.18) translateY(-4px);
+  opacity:1;
+  filter:brightness(1.15);
+}
+
+.social-icon.ig:hover{
+  box-shadow:0 0 12px rgba(225,48,108,.8),0 0 25px rgba(253,29,29,.6);
+}
+.social-icon.wa:hover{
+  box-shadow:0 0 12px rgba(37,211,102,.8),0 0 25px rgba(37,211,102,.6);
+}
+
+.support-text{
+  margin-top:18px;
+  font-size:13px;
+  color:#ccc;
+}
+.support-text a{
+  color:#00e676;
+  font-weight:600;
+  text-decoration:none;
 }
 
 .copyright{
-  position:fixed;
-  bottom:6px;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:10px;
+  margin-top:10px;
+  font-size:11px;
+  letter-spacing:.6px;
   color:rgba(255,255,255,.35);
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
   <h1>⏱ MIQAT</h1>
-  <div class="timer" id="timer">00:00:00</div>
 
-  <div class="progress-wrapper">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
+  <div class="timer" id="timer">00:00:00</div>
+  <div class="progress-wrapper"><div class="progress-bar" id="progressBar"></div></div>
 
   <div class="time-input-group">
     <div class="time-field">
       <label>Jam</label>
-      <input id="hour" type="number" min="0" placeholder="0">
+      <input id="hour" type="number" min="0">
     </div>
     <span class="time-separator">:</span>
     <div class="time-field">
       <label>Menit</label>
-      <input id="minute" type="number" min="0" max="59" placeholder="00">
+      <input id="minute" type="number" min="0" max="59">
     </div>
   </div>
 
@@ -189,32 +282,52 @@ li{
   </div>
 
   <div class="todo">
+    <div class="task-progress-wrapper">
+      <div class="task-progress-bar" id="taskProgressBar"></div>
+    </div>
     <div class="task-progress-text" id="taskProgressText">0% tugas selesai</div>
 
     <div class="todo-input">
       <input id="taskInput" placeholder="Tambah tugas...">
-      <button onclick="addTask()">+</button>
+      <button onclick="addTask()">＋</button>
     </div>
-
     <ul id="taskList"></ul>
   </div>
-</div>
 
-<div class="copyright">© 2025 Afhimna Dev. All Rights Reserved.</div>
+  <!-- ===== SOWAR ===== -->
+  <div class="social-container">
+    <p>Info lebih lanjut, hubungi kami:</p>
+
+    <div class="social-icons">
+      <a href="https://www.instagram.com/umarhamdan_a/" target="_blank">
+        <img src="https://res.cloudinary.com/dmecuyazc/image/upload/v1766738130/ig_nhlx8u.png"
+             class="social-icon ig" alt="Instagram">
+      </a>
+      <a href="https://wa.me/62859106771139" target="_blank">
+        <img src="https://res.cloudinary.com/dmecuyazc/image/upload/v1766738128/wa_qpuube.png"
+             class="social-icon wa" alt="WhatsApp">
+      </a>
+    </div>
+
+    <div class="support-text">
+      Berkenan mendukung kami? <a href="https://www.google.com" target="_blank">Klik di sini</a>
+    </div>
+
+    <div class="copyright">
+      © 2025 Afhimna Dev. All Rights Reserved.
+    </div>
+  </div>
+</div>
 
 <script>
 let totalSeconds=0, initialSeconds=0, lastCheckpoint=0;
 let interval=null, paused=false;
 
-const timerEl=document.getElementById("timer");
-const progressBar=document.getElementById("progressBar");
-const taskProgressText=document.getElementById("taskProgressText");
-
 function updateDisplay(){
   const h=Math.floor(totalSeconds/3600);
   const m=Math.floor((totalSeconds%3600)/60);
   const s=totalSeconds%60;
-  timerEl.textContent=
+  timer.textContent=
     String(h).padStart(2,"0")+":"+
     String(m).padStart(2,"0")+":"+
     String(s).padStart(2,"0");
@@ -224,8 +337,7 @@ function startTimer(){
   if(interval) return;
   if(totalSeconds===0){
     totalSeconds=(+hour.value||0)*3600+(+minute.value||0)*60;
-    initialSeconds=totalSeconds;
-    lastCheckpoint=totalSeconds;
+    initialSeconds=lastCheckpoint=totalSeconds;
   }
   interval=setInterval(()=>{
     if(!paused && totalSeconds>0){
@@ -253,6 +365,14 @@ function format(sec){
   return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
 }
 
+function updateTaskProgress(){
+  const tasks=[...taskList.children];
+  const done=tasks.filter(li=>li.classList.contains("done")).length;
+  const percent=tasks.length?Math.round(done/tasks.length*100):0;
+  taskProgressBar.style.width=percent+"%";
+  taskProgressText.textContent=percent+"% tugas selesai";
+}
+
 function addTask(){
   const text=taskInput.value.trim();
   if(!text) return;
@@ -275,15 +395,16 @@ function addTask(){
   cb.onchange=()=>{
     if(cb.checked){
       li.classList.add("done");
-      const duration = lastCheckpoint - totalSeconds;
-      lastCheckpoint = totalSeconds;
-      time.textContent = format(duration);
-      updateTaskProgress();
+      name.classList.add("done");
+      const dur=lastCheckpoint-totalSeconds;
+      lastCheckpoint=totalSeconds;
+      time.textContent=format(dur);
     }else{
       li.classList.remove("done");
+      name.classList.remove("done");
       time.textContent="--:--";
-      updateTaskProgress();
     }
+    updateTaskProgress();
   };
 
   left.append(cb,name);
@@ -293,15 +414,8 @@ function addTask(){
   updateTaskProgress();
 }
 
-function updateTaskProgress(){
-  const tasks=[...document.querySelectorAll("#taskList li")];
-  const done=tasks.filter(t=>t.classList.contains("done")).length;
-  const percent=tasks.length?Math.round(done/tasks.length*100):0;
-  taskProgressText.textContent=percent+"% tugas selesai";
-}
-
 document.addEventListener("keydown",e=>{
-  if(e.code==="Space"){e.preventDefault();togglePause();}
+  if(e.code==="Space"){e.preventDefault();togglePause()}
   if(e.key==="Enter"){
     document.activeElement===taskInput?addTask():startTimer();
   }
@@ -309,5 +423,6 @@ document.addEventListener("keydown",e=>{
 
 updateDisplay();
 </script>
+
 </body>
 </html>
